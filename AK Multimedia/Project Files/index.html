@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Multimedia Player</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <button id="mobile-menu-btn" class="ctrl-btn hidden-desktop"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-play"></i></div>
+                    <h1>AK Multimedia</h1>
+                </div>
+            </div>
+            
+            <div class="mode-switch">
+                <button id="audio-mode-btn" class="active"><i class="fas fa-music"></i> <span>Audio</span></button>
+                <button id="video-mode-btn"><i class="fas fa-video"></i> <span>Video</span></button>
+            </div>
+            
+            <div class="folder-picker">
+                <label for="folder-input" class="custom-file-upload">
+                    <i class="fas fa-folder-plus"></i> Select Folder
+                </label>
+                <input type="file" id="folder-input" webkitdirectory directory multiple>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Playlist Sidebar -->
+            <aside id="playlist-panel" class="playlist-panel">
+                <div class="playlist-header">
+                    <h2>Library <span id="playlist-count" class="badge">0</span></h2>
+                    <button id="close-playlist-btn" class="ctrl-btn hidden-desktop"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search library...">
+                </div>
+                <div class="playlist-container">
+                    <ul id="playlist-ul">
+                        <!-- Placeholder for empty state -->
+                        <div class="empty-state">
+                            <i class="fas fa-folder-open empty-icon"></i>
+                            <p>No media found</p>
+                            <span>Select a folder to load files</span>
+                        </div>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Player Section -->
+            <section class="player-section">
+                <!-- Visuals area -->
+                <div class="visuals-container">
+                    <!-- Audio Visualizer -->
+                    <canvas id="visualizer" class="visualizer"></canvas>
+
+                    <!-- Video Container -->
+                    <div id="video-container" class="hidden">
+                        <video id="video-player"></video>
+                        <div id="video-controls" class="video-controls">
+                            <div class="vc-main-row">
+                                <button id="vc-play-pause" class="vc-btn"><i class="fas fa-play"></i></button>
+                                <button id="vc-prev" class="vc-btn"><i class="fas fa-backward-step"></i></button>
+                                <button id="vc-next" class="vc-btn"><i class="fas fa-forward-step"></i></button>
+                                
+                                <div class="vc-time">
+                                    <span id="vc-current-time">0:00</span> / <span id="vc-total-time">0:00</span>
+                                </div>
+                                
+                                <div class="vc-progress-wrapper">
+                                    <input type="range" id="vc-progress" value="0" min="0" max="100" step="0.1">
+                                    <div class="vc-progress-fill" id="vc-progress-fill"></div>
+                                </div>
+                                
+                                <div class="vc-skip-group">
+                                    <button class="vc-skip-btn" data-skip="-5"><i class="fas fa-angles-left"></i></button>
+                                    <button class="vc-skip-btn" data-skip="-5">5s</button>
+                                    <button class="vc-skip-btn" data-skip="-10">10s</button>
+                                    <button class="vc-skip-btn" data-skip="-15">15s</button>
+                                </div>
+                                
+                                <div class="vc-skip-group">
+                                    <button class="vc-skip-btn" data-skip="15">15s</button>
+                                    <button class="vc-skip-btn" data-skip="10">10s</button>
+                                    <button class="vc-skip-btn" data-skip="5">5s</button>
+                                    <button class="vc-skip-btn" data-skip="5"><i class="fas fa-angles-right"></i></button>
+                                </div>
+                                
+                                <div class="vc-speed">
+                                    <select id="vc-speed-select">
+                                        <option value="0.5">0.5x</option>
+                                        <option value="1" selected>1.0x</option>
+                                        <option value="1.5">1.5x</option>
+                                        <option value="2">2.0x</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="vc-volume">
+                                    <button id="vc-mute" class="vc-btn"><i class="fas fa-volume-high" id="vc-volume-icon"></i></button>
+                                    <input type="range" id="vc-volume-bar" value="100" min="0" max="100">
+                                </div>
+                                
+                                <button id="fullscreen-btn" class="vc-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+                        <button id="vc-close-fs" class="vc-close-fs hidden"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+                <div class="bottom-controls-area">
+                    <!-- Media Info -->
+                    <div class="media-info">
+                        <div class="track-icon">
+                            <i class="fas fa-compact-disc fa-spin-hover" id="media-spin-icon"></i>
+                        </div>
+                        <div class="track-details">
+                            <h2 id="now-playing-title" class="scrolling-text">Ready to Play</h2>
+                            <p id="now-playing-artist">AK Player</p>
+                        </div>
+                    </div>
+
+                    <div class="controls-wrapper">
+                        <!-- Progress -->
+                        <div class="progress-container">
+                            <span id="current-time">0:00</span>
+                            <div class="progress-bar-wrapper">
+                                <input type="range" id="progress-bar" value="0" min="0" max="100" step="0.1">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                            <span id="total-time">0:00</span>
+                        </div>
+
+                        <!-- Main Buttons -->
+                        <div class="playback-controls">
+                            <button id="skip-back-btn" class="ctrl-btn skip-btn"><i class="fas fa-rotate-left"></i></button>
+                            <button id="prev-btn" class="ctrl-btn"><i class="fas fa-backward-step"></i></button>
+                            <button id="play-pause-btn" class="play-btn"><i class="fas fa-play"></i></button>
+                            <button id="next-btn" class="ctrl-btn"><i class="fas fa-forward-step"></i></button>
+                            <button id="skip-forward-btn" class="ctrl-btn skip-btn"><i class="fas fa-rotate-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Extra Controls -->
+                    <div class="extra-controls">
+                        <div class="skip-duration-control tool-panel">
+                            <i class="fas fa-stopwatch"></i>
+                            <select id="skip-duration-select">
+                                <option value="5">5s Skip</option>
+                                <option value="10" selected>10s Skip</option>
+                                <option value="15">15s Skip</option>
+                            </select>
+                        </div>
+                        <div class="volume-control tool-panel">
+                            <i class="fas fa-volume-high" id="volume-icon"></i>
+                            <input type="range" id="volume-bar" value="100" min="0" max="100">
+                        </div>
+                        <div class="speed-control tool-panel">
+                            <i class="fas fa-gauge-high"></i>
+                            <select id="speed-select">
+                                <option value="0.5">0.5x</option>
+                                <option value="0.75">0.75x</option>
+                                <option value="1" selected>1.0x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="1.75">1.75x</option>
+                                <option value="2">2.0x</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Audio Specific Controls -->
+                    <div id="audio-specific-controls" class="audio-controls glass-panel">
+                        <div class="audio-header">
+                            <h3><i class="fas fa-sliders"></i> Audio Engine</h3>
+                            <button id="reset-audio-btn" class="small-btn"><i class="fas fa-rotate-right"></i> Reset</button>
+                        </div>
+                        <div class="fx-container">
+                            <div class="eq-controls">
+                                <div class="eq-band">
+                                    <input type="range" id="eq-treble" value="0" min="-20" max="20" step="1" orient="vertical">
+                                    <label>Hi</label>
+                                </div>
+                                <div class="eq-band">
+                                    <input type="range" id="eq-mid" value="0" min="-20" max="20" step="1" orient="vertical">
+                                    <label>Mid</label>
+                                </div>
+                                <div class="eq-band">
+                                    <input type="range" id="eq-bass" value="0" min="-20" max="20" step="1" orient="vertical">
+                                    <label>Low</label>
+                                </div>
+                            </div>
+                            <div class="reverb-control">
+                                <div class="knob-container">
+                                    <input type="range" id="reverb-mix" value="0" min="0" max="100" step="1" orient="vertical">
+                                </div>
+                                <label>Reverb</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js?v=2"></script>
+</body>
+</html>
