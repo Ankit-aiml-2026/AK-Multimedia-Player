@@ -3,7 +3,7 @@ This is my second projects where used AI tools to create it and it tooks around 
 
 
 ✨ Key Features:
--🎵 Separate Audio & Video playlists
+-🎵 Separate Audio & Video playlists.
 -⌨️ Full keyboard-controlled playback system
 📱 Fully responsive across PC, Tablet, and Mobile
 💾 Automatically restores previously loaded playlists after revisiting the website
