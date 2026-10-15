@@ -1,6 +1,6 @@
 # AK-Multimedia-Player
 
-This is my second project, built using AI-assisted development tools. It took around 2 weeks to complete.
+This is my second project, built using AI-assisted development tools. It took around 2 days to complete.
 
 ## ✨ Key Features
 
